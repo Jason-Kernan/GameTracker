@@ -22,26 +22,26 @@ public class GameDAO {
     }
 
     public Game getGameById(String username, int id) {
-        return jdbcTemplate.queryForObject("select * from game where username = ? and id = ?", this::mapRowToGame, username, id);
+        return jdbcTemplate.queryForObject("select * from game where username = ? and game_id = ?", this::mapRowToGame, username, id);
     }
     public List <Game> searchGames (String username, String search) {
         return jdbcTemplate.query("select * from game where username = ? and game_name ilike ?", this ::mapRowToGame, username, "%" + search +"%");
     }
 
     public Game addGame(Game game) {
-         jdbcTemplate.update("insert into game (game_name, studio_name, hours_played, username) values (?,?,?,?)",
+         jdbcTemplate.update("insert into game (game_name, studio, hours_played, username) values (?,?,?,?)",
                 game.getGame_name(), game.getStudio_name(), game.getHours_played(), game.getUsername());
         return getGameById(game.getUsername(),game.getGame_id());
     }
 
-    public Game updateGame(Game game) {
-        jdbcTemplate.update("update game set game_name = ?, studio_name = ?, hours_played = ? where username = ?",
-                game.getGame_name(), game.getStudio_name(), game.getHours_played(), game.getUsername());
+    public Game updateGame(Game game, int id) {
+        jdbcTemplate.update("update game set game_name = ?, studio = ?, hours_played = ? where username = ? and game_id = ?",
+                game.getGame_name(), game.getStudio_name(), game.getHours_played(), game.getUsername(),id);
         return getGameById(game.getUsername(), game.getGame_id());
     }
 
     public void deleteGame(String username, int id){
-        jdbcTemplate.update("Delete from games where game_id = ? and username =?", username, id);
+        jdbcTemplate.update("Delete from game where game_id = ? and username =?", id,username);
     }
     public void linkGameLauncher(String username, int gameId, int launcherId) {
         if (getGameById(username, gameId) == null){

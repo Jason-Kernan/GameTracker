@@ -2,10 +2,7 @@ package com.example.Game.Tracker.Controllers;
 
 import com.example.Game.Tracker.DAO.GameDAO;
 import com.example.Game.Tracker.Models.Game;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -36,5 +33,38 @@ public class GameController {
         }
     }
 
-    @RequestMapping(method = )
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Game gameById(Principal principal, @PathVariable int id) {
+        String username = "Jason";
+        if(principal != null) {
+            username = principal.getName();
+        }
+        return gameDAO.getGameById(username, id);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public Game updateGame(Principal principal,@RequestBody Game game ,@PathVariable int id){
+        String username = "Jason";
+        if(principal != null){
+            username = principal.getName();
+        }
+        return gameDAO.updateGame(game, id);
+    }
+
+
+    @RequestMapping (path = "/{id}", method = RequestMethod.DELETE)
+    public void deleteGame(Principal principal, @PathVariable int id){
+        String username = "Jason";
+        if(principal != null){
+            username = principal.getName();
+        }
+        gameDAO.deleteGame(username, id);
+    }
+
+    @RequestMapping (method = RequestMethod.POST)
+    public Game addGame(@RequestBody Game game){
+        gameDAO.addGame(game);
+        return gameDAO.getGameById(game.getUsername(), game.getGame_id());
+    }
+
 }
