@@ -25,25 +25,25 @@ public class PlatformDAO {
 
     public List<Platform> getPlatformForGame(String username, int gameId) {
         return jdbcTemplate.query("select * from platform " +
-                "join platform.platform_id on game_platform.platform_id " +
+                "join game_platform on platform.platform_id = game_platform.platform_id " +
                 "join game on game_platform.game_id = game.game_id " +
-                "where username = ? and game_id = ?", this::mapRowToPlatform, username, gameId);
+                "where username = ? and game.game_id = ?", this::mapRowToPlatform, username, gameId);
     }
 
     public Platform addPlatform(Platform platform) {
-        jdbcTemplate.update("insert into platform (launcher_id, launcher_name), values (?,?)",
+        jdbcTemplate.update("insert into platform (platform_id, platform_name) values (?,?)",
                 platform.getPlatform_id(), platform.getPlatform_name());
         return getPlatformByID(platform.getPlatform_id());
     }
 
-    public Platform updateLauncher(Platform platform, int platformId) {
-        jdbcTemplate.update("update platform set platform_name where platform_id = ?",
+    public Platform updatePlatform (Platform platform, int platformId) {
+        jdbcTemplate.update("update platform set platform_name = ? where platform_id = ?",platform.getPlatform_name(),
                 platformId);
         return getPlatformByID(platform.getPlatform_id());
     }
 
-    public void deleteLauncher(int launcherId) {
-        jdbcTemplate.update("Delete from launcher where launcher_id = ?", launcherId);
+    public void deletePlatform(int platformId) {
+        jdbcTemplate.update("Delete from platform where platform_id = ?", platformId);
     }
 
 
