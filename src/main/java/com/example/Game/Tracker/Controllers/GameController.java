@@ -43,11 +43,7 @@ public class GameController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public Game updateGame(Principal principal,@RequestBody Game game ,@PathVariable int id){
-        String username = "Jason";
-        if(principal != null){
-            username = principal.getName();
-        }
+    public Game updateGame(@RequestBody Game game ,@PathVariable int id){
         return gameDAO.updateGame(game, id);
     }
 

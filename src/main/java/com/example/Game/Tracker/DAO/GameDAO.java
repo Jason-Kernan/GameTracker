@@ -3,7 +3,6 @@ package com.example.Game.Tracker.DAO;
 import com.example.Game.Tracker.Models.Game;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
