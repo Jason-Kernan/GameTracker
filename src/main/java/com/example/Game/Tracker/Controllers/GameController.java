@@ -63,4 +63,40 @@ public class GameController {
         return gameDAO.getGameById(game.getUsername(), game.getGame_id());
     }
 
+
+    @RequestMapping(path = "/{gameid}/launcherlink/{launcherid}", method = RequestMethod.POST)
+        public void linklauncher( Principal principal,@PathVariable int gameid, @PathVariable int launcherid){
+        String username = "Jason";
+        if (principal != null) {
+         username = principal.getName();
+        }
+       gameDAO.linkGameLauncher(username, gameid, launcherid);
+    }
+
+    @RequestMapping(path = "/{gameid}/platformlink/{platformid}", method = RequestMethod.POST)
+    public void linkplatform( Principal principal,@PathVariable int gameid, @PathVariable int platformid){
+        String username = "Jason";
+        if (principal != null) {
+            username = principal.getName();
+        }
+        gameDAO.linkGamePlatform(username, gameid, platformid);
+    }
+
+    @RequestMapping(path = "/{gameid}/launcherunlink/{launcherid}", method = RequestMethod.DELETE)
+    public void unlinklauncher( Principal principal,@PathVariable int gameid, @PathVariable int launcherid){
+        String username = "Jason";
+        if (principal != null) {
+            username = principal.getName();
+        }
+        gameDAO.unlinkGameLauncher(username, gameid, launcherid);
+    }
+
+    @RequestMapping(path = "/{gameid}/platformunlink/{platformid}", method = RequestMethod.DELETE)
+    public void unlinkplatform( Principal principal,@PathVariable int gameid, @PathVariable int platformid){
+        String username = "Jason";
+        if (principal != null) {
+            username = principal.getName();
+        }
+        gameDAO.unlinkGamePlatform(username, gameid, platformid);
+    }
 }

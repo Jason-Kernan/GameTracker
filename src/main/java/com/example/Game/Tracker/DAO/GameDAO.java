@@ -53,7 +53,7 @@ public class GameDAO {
         if (getGameById(username, gameId) == null){
             return;
         } else {
-            jdbcTemplate.update("insert into game_platform (game_id, launcher_id) values (?.?)", gameId, platformId);
+            jdbcTemplate.update("insert into game_platform (game_id, platform_id) values (?,?)", gameId, platformId);
         }
     }
 
@@ -68,7 +68,7 @@ public class GameDAO {
         if (getGameById(username, gameId) == null){
             return;
         } else {
-            jdbcTemplate.update("delete from game_platform where game_id = ? and launcher_id = ?", gameId, platformId);
+            jdbcTemplate.update("delete from game_platform where game_id = ? and platform_id = ?", gameId, platformId);
         }
     }
 
